@@ -1,0 +1,109 @@
+-- Procedure to display all products
+DELIMITER //
+
+CREATE PROCEDURE get_all_products()
+BEGIN
+    SELECT
+        product_id,
+        product_name,
+        price,
+        stock_quantity
+    FROM products;
+END //
+
+DELIMITER ;
+
+CALL get_all_products();
+
+
+
+-- Procedure to retrieve products by category
+DELIMITER //
+
+CREATE PROCEDURE get_products_by_category(
+    IN cat_id INT
+)
+BEGIN
+    SELECT
+        p.product_id,
+        p.product_name,
+        c.category_name,
+        p.price
+    FROM products p
+    INNER JOIN categories c
+        ON p.category_id = c.category_id
+    WHERE p.category_id = cat_id;
+END //
+
+DELIMITER ;
+
+CALL get_products_by_category(3);
+
+
+
+-- Procedure with an OUT parameter
+
+DELIMITER //
+
+CREATE PROCEDURE get_customer_count(
+    OUT total_customers INT
+)
+BEGIN
+    SELECT COUNT(*)
+    INTO total_customers
+    FROM customers;
+END //
+
+DELIMITER ;
+
+CALL get_customer_count(@total);
+
+SELECT @total AS total_customers;
+
+
+
+-- Procedure to display city-wise revenue
+DELIMITER //
+
+CREATE PROCEDURE get_city_wise_revenue()
+BEGIN
+    SELECT
+        c.city,
+        SUM(oi.quantity * oi.unit_price) AS total_revenue
+    FROM customers c
+    INNER JOIN orders o
+        ON c.customer_id = o.customer_id
+    INNER JOIN order_items oi
+        ON o.order_id = oi.order_id
+    WHERE o.order_status = 'Delivered'
+    GROUP BY c.city
+    ORDER BY total_revenue DESC;
+END //
+
+DELIMITER ;
+
+CALL get_city_wise_revenue();
+
+
+
+-- Find products within a price range
+DELIMITER //
+
+CREATE PROCEDURE get_products_by_price_range(
+    IN min_price DECIMAL(10,2),
+    IN max_price DECIMAL(10,2)
+)
+BEGIN
+    SELECT
+        product_id,
+        product_name,
+        price,
+        stock_quantity
+    FROM products
+    WHERE price BETWEEN min_price AND max_price
+    ORDER BY price;
+END //
+
+DELIMITER ;
+
+CALL get_products_by_price_range(1000, 10000);
