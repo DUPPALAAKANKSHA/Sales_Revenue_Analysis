@@ -1,0 +1,45 @@
+-- conditional functions
+SELECT
+    product_name,
+    price,
+    CASE
+        WHEN price >= 50000 THEN 'Expensive'
+        WHEN price >= 10000 THEN 'Medium'
+        ELSE 'Affordable'
+    END AS price_category
+FROM products;
+
+-- numeric function
+SELECT SUM(oi.quantity * oi.unit_price) AS total_revenue
+FROM orders o
+JOIN order_items oi
+ON o.order_id = oi.order_id
+WHERE o.order_status = 'Delivered';
+
+-- string function
+SELECT
+    CONCAT(customer_name, ' - ', city) AS customer_details
+FROM customers;
+
+-- null handling functions
+SELECT
+    payment_id,
+    COALESCE(
+        DATE_FORMAT(payment_date, '%d-%m-%Y'),
+        'Not Paid'
+    ) AS payment_date
+FROM payments;
+
+-- windows function
+
+SELECT
+    p.product_name,
+    c.category_name,
+    p.price,
+    DENSE_RANK() OVER (
+        PARTITION BY p.category_id
+        ORDER BY p.price DESC
+    ) AS category_rank
+FROM products p
+JOIN categories c
+ON p.category_id = c.category_id;
