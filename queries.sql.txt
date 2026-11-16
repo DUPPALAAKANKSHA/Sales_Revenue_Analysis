@@ -1,0 +1,53 @@
+-- queries
+SELECT *
+FROM customers
+WHERE customer_name LIKE 'A%';
+
+
+
+-- joins
+SELECT
+    o.order_id,
+    o.order_status,
+    p.amount,
+    p.payment_method,
+    p.payment_status
+FROM orders o
+LEFT JOIN payments p
+ON o.order_id = p.order_id;
+
+
+
+SELECT
+    p.product_name,
+    cat.category_name
+FROM products p
+INNER JOIN categories cat
+ON p.category_id = cat.category_id;
+
+
+
+-- subquery
+-- customers who have placed at least one delivered order.
+SELECT customer_name
+FROM customers
+WHERE customer_id IN (
+    SELECT customer_id
+    FROM orders
+    WHERE order_status = 'Delivered'
+);
+
+
+
+-- latest order placed by each customer.
+SELECT
+    o.order_id,
+    o.customer_id,
+    o.order_date,
+    o.order_status
+FROM orders o
+WHERE o.order_date = (
+    SELECT MAX(o2.order_date)
+    FROM orders o2
+    WHERE o2.customer_id = o.customer_id
+);
