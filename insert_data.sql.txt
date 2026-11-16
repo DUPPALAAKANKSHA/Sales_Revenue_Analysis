@@ -1,0 +1,128 @@
+-- insertion in customers table
+INSERT INTO customers
+(customer_name, email, phone, city, registration_date)
+VALUES
+('Ravi Kumar', 'ravi@gmail.com', '9876500001', 'Hyderabad', '2023-01-15'),
+('Sita Sharma', 'sita@gmail.com', '9876500002', 'Chennai', '2023-02-20'),
+('Arjun Reddy', 'arjun@gmail.com', '9876500003', 'Bangalore', '2023-03-10'),
+('Priya Singh', 'priya@gmail.com', '9876500004', 'Hyderabad', '2023-04-05'),
+('Kiran Rao', 'kiran@gmail.com', '9876500005', 'Mumbai', '2023-05-12'),
+('Anjali Verma', 'anjali@gmail.com', '9876500006', 'Delhi', '2023-06-18'),
+('Rahul Das', 'rahul@gmail.com', '9876500007', 'Pune', '2023-07-22'),
+('Sneha Patel', 'sneha@gmail.com', '9876500008', 'Chennai', '2023-08-14'),
+('Vikram Gupta', 'vikram@gmail.com', '9876500009', 'Bangalore', '2023-09-09'),
+('Neha Reddy', 'neha@gmail.com', '9876500010', 'Hyderabad', '2023-10-11'),
+('Amit Kumar', 'amit@gmail.com', '9876500011', 'Mumbai', '2024-01-08'),
+('Pooja Nair', 'pooja@gmail.com', '9876500012', 'Kochi', '2024-02-16'),
+('Manoj Shah', 'manoj@gmail.com', '9876500013', 'Delhi', '2024-03-21'),
+('Divya Rao', 'divya@gmail.com', '9876500014', 'Pune', '2024-04-13'),
+('Sanjay Mehta', 'sanjay@gmail.com', '9876500015', 'Bangalore', '2024-05-19');
+
+
+
+-- insertion in categories table
+INSERT INTO categories (category_name)
+VALUES
+('Electronics'),
+('Mobiles'),
+('Laptops'),
+('Home Appliances'),
+('Fashion'),
+('Footwear'),
+('Books'),
+('Furniture'),
+('Sports'),
+('Beauty'),
+('Kitchen'),
+('Gaming'),
+('Accessories'),
+('Stationery'),
+('Health');
+
+
+
+-- insertion in products table
+INSERT INTO products
+(product_name, category_id, price, stock_quantity, product_status)
+VALUES
+('Samsung Galaxy M14', 2, 14500.00, 25, 'Active'),
+('iPhone 15', 2, 65000.00, 10, 'Active'),
+('Dell Laptop', 3, 55000.00, 15, 'Active'),
+('HP Laptop', 3, 48000.00, 20, 'Active'),
+('LG Refrigerator', 4, 32000.00, 8, 'Active'),
+('Men Cotton Shirt', 5, 1200.00, 50, 'Active'),
+('Running Shoes', 6, 2500.00, 30, 'Active'),
+('Python Programming Book', 7, 650.00, 40, 'Active'),
+('Office Chair', 8, 7500.00, 12, 'Active'),
+('Cricket Bat', 9, 3500.00, 18, 'Active'),
+('Face Wash', 10, 350.00, 60, 'Active'),
+('Gaming Mouse', 12, 1800.00, 35, 'Active'),
+('Smart Watch', 1, 4500.00, 22, 'Active'),
+('Wireless Headphones', 13, 2800.00, 0, 'Inactive'),
+('Electric Kettle', 11, 1500.00, 14, 'Active');
+
+
+
+-- insertion in orders table
+INSERT INTO orders
+(customer_id, order_date, order_status)
+VALUES
+(1, '2025-01-05', 'Delivered'),
+(2, '2025-01-10', 'Delivered'),
+(3, '2025-01-15', 'Shipped'),
+(4, '2025-02-02', 'Delivered'),
+(5, '2025-02-08', 'Pending'),
+(6, '2025-02-14', 'Delivered'),
+(7, '2025-03-01', 'Cancelled'),
+(8, '2025-03-07', 'Delivered'),
+(9, '2025-03-12', 'Shipped'),
+(10, '2025-04-03', 'Delivered'),
+(11, '2025-04-09', 'Pending'),
+(12, '2025-04-15', 'Delivered'),
+(13, '2025-05-02', 'Delivered'),
+(14, '2025-05-11', 'Cancelled'),
+(15, '2025-05-20', 'Delivered');
+
+
+
+-- insertion in order_items table
+INSERT INTO order_items
+(order_id, product_id, quantity, unit_price)
+VALUES
+(1, 1, 2, 14500.00),
+(2, 3, 1, 55000.00),
+(3, 6, 3, 1200.00),
+(4, 2, 1, 65000.00),
+(5, 5, 1, 32000.00),
+(6, 7, 2, 2500.00),
+(7, 8, 2, 650.00),
+(8, 9, 1, 7500.00),
+(9, 10, 1, 3500.00),
+(10, 4, 1, 48000.00),
+(11, 11, 4, 350.00),
+(12, 12, 2, 1800.00),
+(13, 13, 2, 4500.00),
+(14, 15, 1, 1500.00),
+(15, 3, 1, 55000.00);
+
+
+
+-- insertion in payments table
+INSERT INTO payments
+(order_id, payment_date, amount, payment_method, payment_status)
+VALUES
+(1, '2025-01-05', 29000.00, 'UPI', 'Completed'),
+(2, '2025-01-10', 55000.00, 'Card', 'Completed'),
+(3, '2025-01-15', 3600.00, 'UPI', 'Pending'),
+(4, '2025-02-02', 65000.00, 'Net Banking', 'Completed'),
+(5, NULL, 32000.00, 'Card', 'Pending'),
+(6, '2025-02-14', 5000.00, 'Cash', 'Completed'),
+(7, NULL, 1300.00, 'UPI', 'Failed'),
+(8, '2025-03-07', 7500.00, 'Card', 'Completed'),
+(9, '2025-03-12', 3500.00, 'UPI', 'Pending'),
+(10, '2025-04-03', 48000.00, 'Net Banking', 'Completed'),
+(11, NULL, 1400.00, 'Cash', 'Pending'),
+(12, '2025-04-15', 3600.00, 'UPI', 'Completed'),
+(13, '2025-05-02', 9000.00, 'Card', 'Completed'),
+(14, NULL, 1500.00, 'UPI', 'Refunded'),
+(15, '2025-05-20', 55000.00, 'Net Banking', 'Completed');
