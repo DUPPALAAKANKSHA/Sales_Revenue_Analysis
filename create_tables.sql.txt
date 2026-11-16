@@ -1,0 +1,90 @@
+use sales_analysis;
+-- creation of customer table
+CREATE TABLE customers (
+    customer_id INT PRIMARY KEY AUTO_INCREMENT,
+    customer_name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    phone VARCHAR(15) UNIQUE,
+    city VARCHAR(50) NOT NULL,
+    registration_date DATE NOT NULL
+);
+
+
+
+
+-- creation of category table
+
+CREATE TABLE categories (
+    category_id INT PRIMARY KEY AUTO_INCREMENT,
+    category_name VARCHAR(50) NOT NULL UNIQUE
+);
+
+
+
+
+-- creation of products table
+
+CREATE TABLE products (
+    product_id INT PRIMARY KEY AUTO_INCREMENT,
+    product_name VARCHAR(100) NOT NULL,
+    category_id INT NOT NULL,
+    price DECIMAL(10,2) NOT NULL CHECK (price > 0),
+    stock_quantity INT NOT NULL DEFAULT 0 CHECK (stock_quantity >= 0),
+    product_status VARCHAR(20) DEFAULT 'Active'
+        CHECK (product_status IN ('Active', 'Inactive')),
+
+    FOREIGN KEY (category_id)
+        REFERENCES categories(category_id)
+);
+
+
+
+-- creation of orders table
+
+CREATE TABLE orders (
+    order_id INT PRIMARY KEY AUTO_INCREMENT,
+    customer_id INT NOT NULL,
+    order_date DATE NOT NULL,
+    order_status VARCHAR(20) DEFAULT 'Pending'
+        CHECK (order_status IN ('Pending', 'Delivered', 'Cancelled', 'Shipped')),
+
+    FOREIGN KEY (customer_id)
+        REFERENCES customers(customer_id)
+);
+
+
+
+-- creation of ordered items table
+
+CREATE TABLE order_items (
+    order_item_id INT PRIMARY KEY AUTO_INCREMENT,
+    order_id INT NOT NULL,
+    product_id INT NOT NULL,
+    quantity INT NOT NULL CHECK (quantity > 0),
+    unit_price DECIMAL(10,2) NOT NULL CHECK (unit_price > 0),
+
+    FOREIGN KEY (order_id)
+        REFERENCES orders(order_id),
+
+    FOREIGN KEY (product_id)
+        REFERENCES products(product_id),
+
+    UNIQUE (order_id, product_id)
+);
+
+
+
+-- creation of Payments table
+CREATE TABLE payments (
+    payment_id INT PRIMARY KEY AUTO_INCREMENT,
+    order_id INT NOT NULL,
+    payment_date DATE,
+    amount DECIMAL(10,2) NOT NULL CHECK (amount > 0),
+    payment_method VARCHAR(30) NOT NULL
+        CHECK (payment_method IN ('UPI', 'Card', 'Cash', 'Net Banking')),
+    payment_status VARCHAR(20) DEFAULT 'Pending'
+        CHECK (payment_status IN ('Pending', 'Completed', 'Failed', 'Refunded')),
+
+    FOREIGN KEY (order_id)
+        REFERENCES orders(order_id)
+);
